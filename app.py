@@ -10,10 +10,16 @@ ser = serial.Serial(port='COM3', baudrate=9600)
 # Route to render webpage
 @app.route('/')
 def index():
-    # Reading data from serial port
+    # Render the 'index.html' template
+    return render_template('index.html')
+
+# Route to get data from the serial port
+@app.route('/data')
+def get_data():
+    # Read a line of data from the serial port, decode it, and strip any whitespace characters
     value = ser.readline().decode('utf-8').strip()
-    # Rendering the 'index.html' template with the value
-    return render_template('index.html', value=value)
+    # Return the data as a response to the client
+    return value
 
 # Run the Flask app
 if __name__ == '__main__':
